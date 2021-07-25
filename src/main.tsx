@@ -1,8 +1,10 @@
 import { createServer } from "miragejs";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { getTodos } from "./api/todos";
 import App from "./App";
+import { store } from "./store";
 
 const environment = process.env.NODE_ENV;
 
@@ -18,7 +20,9 @@ if (environment !== "production") {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
