@@ -11,6 +11,9 @@ const environment = process.env.NODE_ENV;
 if (environment !== "production") {
   createServer({
     routes() {
+      this.get("/api/users", () => ({
+        users: [],
+      }));
       this.get("/api/todos", () => ({
         todos: getTodos(100),
       }));

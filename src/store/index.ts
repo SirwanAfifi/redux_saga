@@ -1,8 +1,17 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import createSagaMiddleware from "redux-saga";
+import { watcherSaga } from "./sagas/rootSaga";
+import { todoReducer } from "./reducers";
 
 const reducer = combineReducers({
-  counter: () => null,
+  todos: todoReducer,
 });
 
-export const store = createStore(reducer, composeWithDevTools());
+const sagaMiddleware = createSagaMiddleware();
+
+const middleware = [sagaMiddleware];
+
+export const store = createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
+
+sagaMiddleware.run(watcherSaga);
